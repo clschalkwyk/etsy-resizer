@@ -9,7 +9,27 @@ imcoming = [file for file in os.listdir('incoming') if file.endswith(('.png'))]
 dpi=300
 
 
+#2:3
 sizes = ['4x6','6x9' , '8x12' ,'10x15' , '12x18' , '16x24' , '20x30' , '24x36']
+
+#3:4
+sizes2 = ['6x8',
+'9x12',
+'12x16',
+'15x20',
+'18x24',
+'24x32']
+
+
+#4:5
+sizes3= [
+'4x5',
+'8x10',
+'12x15',
+'16x20',
+'20x25',
+'24x30']
+
 
 
 def resize_image(input_path, output_path, target_width, target_height):
@@ -32,17 +52,22 @@ def resize_cv(input_path, output_path, target_width, target_height):
 
 
 
-img1 = 'incoming/design-harbor-style-1-fs8.png'
-img1_out = 'incoming/design-harbor-style-1_{}.png'
+img1 = 'incoming/design-lions_Watercolor.png'
 # resize_image(img1, img1_out, 200, 400)
 
+img_out = img1[:-4]
+img_ext = img1.split('.')[-1]
 
-for x in sizes:
-   width, height = x.split('x')
-   width = int(width)
-   height = int(height)
-   ou = img1_out.format(x)
+def run_resize(type, sizes):
+    for x in sizes:
+       width, height = x.split('x')
+       width = int(width)
+       height = int(height)
+       new_filename = f"{img_out}_{type}_{x}.{img_ext}"
+       resize_cv(img1, new_filename, width*dpi, height*dpi)
+       print('{} {} [{}] x {} [{}]'.format(new_filename, width, width*dpi, height, height*dpi))
 
 
-   resize_cv(img1, ou, width*dpi, height*dpi)
-   print('{} {} [{}] x {} [{}]'.format(ou, width, width*dpi, height, height*dpi))
+run_resize('2by3', sizes)
+run_resize('3by4', sizes)
+run_resize('4by5', sizes)
